@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LightTherapyPat</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Menu Strings -->
+    <string name="action_logout">Logout</string>
+</resources>
