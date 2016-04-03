@@ -18,6 +18,9 @@ import com.kermitlin.lighttherapypat.utils.Constants;
 
 import java.util.Map;
 
+/**
+ * Represents Sign up screen and functionality of the app
+ */
 public class CreateAccountActivity extends BaseActivity {
     private static final String LOG_TAG = CreateAccountActivity.class.getSimpleName();
     private ProgressDialog mAuthProgressDialog;
@@ -163,9 +166,9 @@ public class CreateAccountActivity extends BaseActivity {
         return true;
     }
 
-    /**
-     * Show error toast to users
-     */
+        /**
+         * Show error toast to users
+         */
     private void showErrorToast(String message) {
         Toast.makeText(CreateAccountActivity.this, message, Toast.LENGTH_LONG).show();
     }

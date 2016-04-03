@@ -31,6 +31,9 @@ import com.kermitlin.lighttherapypat.ui.BaseActivity;
 
 import java.io.IOException;
 
+/**
+ * Represents Sign in screen and functionality of the app
+ */
 public class LoginActivity extends BaseActivity {
 
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
