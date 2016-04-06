@@ -10,12 +10,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ServerValue;
+import com.firebase.client.ValueEventListener;
 import com.kermitlin.lighttherapypat.R;
+import com.kermitlin.lighttherapypat.model.User;
 import com.kermitlin.lighttherapypat.ui.BaseActivity;
 import com.kermitlin.lighttherapypat.utils.Constants;
+import com.kermitlin.lighttherapypat.utils.Utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,9 +30,10 @@ import java.util.Map;
 public class CreateAccountActivity extends BaseActivity {
     private static final String LOG_TAG = CreateAccountActivity.class.getSimpleName();
     private ProgressDialog mAuthProgressDialog;
+    private Firebase mFirebaseRef;
     private EditText mEditTextUsernameCreate, mEditTextEmailCreate, mEditTextPasswordCreate;
     private String mUserName, mUserEmail, mPassword;
-    private Firebase mFirebaseRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +120,7 @@ public class CreateAccountActivity extends BaseActivity {
                 /* Dismiss the progress dialog */
                 mAuthProgressDialog.dismiss();
                 Log.i(LOG_TAG, getString(R.string.log_message_auth_successful));
+                createUserInFirebaseHelper();
             }
 
             @Override
@@ -131,12 +139,39 @@ public class CreateAccountActivity extends BaseActivity {
             }
         });
 
+
     }
 
     /**
      * Creates a new user in Firebase from the Java POJO
      */
-    private void createUserInFirebaseHelper(final String encodedEmail) {
+    private void createUserInFirebaseHelper() {
+        final String encodedEmail = Utils.encodeEmail(mUserEmail);
+        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(encodedEmail);
+        /**
+         * See if there is already a user (for example, if they already logged in with an associated
+         * Google account.
+         */
+        userLocation.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                /* If there is no user, make one */
+                if (dataSnapshot.getValue() == null) {
+                 /* Set raw version of date to the ServerValue.TIMESTAMP value and save into dateCreatedMap */
+                    HashMap<String, Object> timestampJoined = new HashMap<>();
+                    timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+
+                    User newUser = new User(mUserName, encodedEmail, timestampJoined);
+                    userLocation.setValue(newUser);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d(LOG_TAG, getString(R.string.log_error_occurred) + firebaseError.getMessage());
+            }
+        });
+
     }
 
     private boolean isEmailValid(String email) {
@@ -166,9 +201,9 @@ public class CreateAccountActivity extends BaseActivity {
         return true;
     }
 
-        /**
-         * Show error toast to users
-         */
+    /**
+     * Show error toast to users
+     */
     private void showErrorToast(String message) {
         Toast.makeText(CreateAccountActivity.this, message, Toast.LENGTH_LONG).show();
     }

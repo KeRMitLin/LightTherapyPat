@@ -2,8 +2,10 @@ package com.kermitlin.lighttherapypat.ui.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ServerValue;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -29,11 +34,14 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.Scope;
 import com.kermitlin.lighttherapypat.R;
+import com.kermitlin.lighttherapypat.model.User;
 import com.kermitlin.lighttherapypat.ui.BaseActivity;
 import com.kermitlin.lighttherapypat.ui.MainActivity;
 import com.kermitlin.lighttherapypat.utils.Constants;
+import com.kermitlin.lighttherapypat.utils.Utils;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Represents Sign in screen and functionality of the app
@@ -43,6 +51,7 @@ public class LoginActivity extends BaseActivity {
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
     /* A dialog that is presented until the Firebase authentication finished. */
     private ProgressDialog mAuthProgressDialog;
+    /* References to the Firebase */
     private Firebase mFirebaseRef;
     private EditText mEditTextEmailInput, mEditTextPasswordInput;
 
@@ -182,7 +191,29 @@ public class LoginActivity extends BaseActivity {
         public void onAuthenticated(AuthData authData) {
             mAuthProgressDialog.dismiss();
             Log.i(LOG_TAG, provider + " " + getString(R.string.log_message_auth_successful));
+
             if (authData != null) {
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor spe = sp.edit();
+                /**
+                 * If user has logged in with Google provider
+                 */
+                if (authData.getProvider().equals(Constants.PASSWORD_PROVIDER)) {
+                    setAuthenticatedUserPasswordProvider(authData);
+                } else
+                /**
+                 * If user has logged in with Password provider
+                 */
+                    if (authData.getProvider().equals(Constants.GOOGLE_PROVIDER)) {
+                        setAuthenticatedUserGoogle(authData);
+                    } else {
+                        Log.e(LOG_TAG, getString(R.string.log_error_invalid_provider) + authData.getProvider());
+                    }
+
+                /* Save provider name and encodedEmail for later use and start MainActivity */
+                spe.putString(Constants.KEY_PROVIDER, authData.getProvider()).apply();
+                spe.putString(Constants.KEY_ENCODED_EMAIL, mEncodedEmail).apply();
+
                 /* Go to main activity */
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -220,17 +251,72 @@ public class LoginActivity extends BaseActivity {
     /**
      * Helper method that makes sure a user is created if the user
      * logs in with Firebase's email/password provider.
+     *
      * @param authData AuthData object returned from onAuthenticated
      */
     private void setAuthenticatedUserPasswordProvider(AuthData authData) {
+        final String unprocessedEmail = authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase();
+        /**
+         * Encode user email replacing "." with ","
+         * to be able to use it as a Firebase db key
+         */
+        mEncodedEmail = Utils.encodeEmail(unprocessedEmail);
     }
 
     /**
      * Helper method that makes sure a user is created if the user
      * logs in with Firebase's Google login provider.
+     *
      * @param authData AuthData object returned from onAuthenticated
      */
-    private void setAuthenticatedUserGoogle(AuthData authData){
+    private void setAuthenticatedUserGoogle(AuthData authData) {
+/**
+ * If google api client is connected, get the lowerCase user email
+ * and save in sharedPreferences
+ */
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor spe = sp.edit();
+        String unprocessedEmail;
+        if (mGoogleApiClient.isConnected()) {
+            unprocessedEmail = mGoogleAccount.getEmail().toLowerCase();
+            spe.putString(Constants.KEY_GOOGLE_EMAIL, unprocessedEmail).apply();
+        } else {
+
+            /**
+             * Otherwise get email from sharedPreferences, use null as default value
+             * (this mean that user resumes his session)
+             */
+            unprocessedEmail = sp.getString(Constants.KEY_GOOGLE_EMAIL, null);
+        }
+        /**
+         * Encode user email replacing "." with "," to be able to use it
+         * as a Firebase db key
+         */
+        mEncodedEmail = Utils.encodeEmail(unprocessedEmail);
+
+            /* Get username from authData */
+        final String userName = (String) authData.getProviderData().get(Constants.PROVIDER_DATA_DISPLAY_NAME);
+
+            /* If no user exists, make a user */
+        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
+        userLocation.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                    /* If nothing is there ...*/
+                if (dataSnapshot.getValue() == null) {
+                    HashMap<String, Object> timestampJoined = new HashMap<>();
+                    timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+
+                    User newUser = new User(userName, mEncodedEmail, timestampJoined);
+                    userLocation.setValue(newUser);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d(LOG_TAG, getString(R.string.log_error_occurred) + firebaseError.getMessage());
+            }
+        });
 
     }
 
@@ -244,9 +330,11 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * Signs you into ShoppingList++ using the Google Login Provider
+     *
      * @param token A Google OAuth access token returned from Google
      */
     private void loginWithGoogle(String token) {
+        mFirebaseRef.authWithOAuthToken(Constants.GOOGLE_PROVIDER, token, new MyAuthResultHandler(Constants.GOOGLE_PROVIDER));
     }
 
     /**

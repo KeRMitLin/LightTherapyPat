@@ -10,9 +10,11 @@ import android.widget.ListView;
 
 import com.firebase.client.Firebase;
 import com.kermitlin.lighttherapypat.R;
+import com.kermitlin.lighttherapypat.model.TherapyList;
 import com.kermitlin.lighttherapypat.utils.Constants;
 
 public class TherapyListsFragment extends Fragment {
+    private TherapyListAdapter mActiveListAdapter;
     private ListView mListView;
 
     public TherapyListsFragment() {
@@ -54,17 +56,14 @@ public class TherapyListsFragment extends Fragment {
          */
         Firebase activeListsRef = new Firebase(Constants.FIREBASE_URL_ACTIVE_LISTS);
 
-//        /**
-//         * Add ValueEventListeners to Firebase references
-//         * to control get data and control behavior and visibility of elements
-//         */
-//        mActiveListAdapter = new ActiveListAdapter(getActivity(), ShoppingList.class,
-//                R.layout.single_active_list, activeListsRef);
-//
-//        /**
-//         * Set the adapter to the mListView
-//         */
-//        mListView.setAdapter(mActiveListAdapter);
+        /**
+         * Create the adapter, giving it the activity, model class, layout for each row in
+         * the list and finally, a reference to the Firebase location with the list data
+         */
+        mActiveListAdapter = new TherapyListAdapter(getActivity(), TherapyList.class,
+                R.layout.single_active_list, activeListsRef);
+
+        mListView.setAdapter(mActiveListAdapter);
 
         /**
          * Set interactive bits, such as click events and adapters
@@ -72,9 +71,9 @@ public class TherapyListsFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ShoppingList selectedList = mActiveListAdapter.getItem(position);
-//                if (selectedList != null) {
-//                    Intent intent = new Intent(getActivity(), ActiveListDetailsActivity.class);
+                TherapyList selectedList = mActiveListAdapter.getItem(position);
+                if (selectedList != null) {
+//                    Intent intent = new Intent(getActivity(), TherapyGo.class);
 //                    /* Get the list ID using the adapter's get ref method to get the Firebase
 //                     * ref and then grab the key.
 //                     */
@@ -82,7 +81,7 @@ public class TherapyListsFragment extends Fragment {
 //                    intent.putExtra(Constants.KEY_LIST_ID, listId);
 //                    /* Starts an active showing the details for the selected list */
 //                    startActivity(intent);
-//                }
+                }
             }
         });
 
@@ -92,7 +91,7 @@ public class TherapyListsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        mActiveListAdapter.cleanup();
+        mActiveListAdapter.cleanup();
     }
 
     /**
