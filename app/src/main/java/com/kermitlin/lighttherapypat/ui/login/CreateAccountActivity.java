@@ -135,11 +135,8 @@ public class CreateAccountActivity extends BaseActivity {
                 } else {
                     showErrorToast(firebaseError.getMessage());
                 }
-
             }
         });
-
-
     }
 
     /**
