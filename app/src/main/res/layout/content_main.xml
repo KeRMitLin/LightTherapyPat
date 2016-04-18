@@ -1,8 +1,24 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_main"
-    android:name="com.kermitlin.lighttherapypat.ui.therapyLists.TherapyListsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kermitlin.lighttherapypat.ui.MainActivity"
-    tools:layout="@android:layout/list_content" />
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.kermitlin.lighttherapypat.ui.therapyLists.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/list_view_therapy_lists"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+</RelativeLayout>

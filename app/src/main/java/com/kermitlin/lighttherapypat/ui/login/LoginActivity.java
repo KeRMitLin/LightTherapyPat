@@ -24,7 +24,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.kermitlin.lighttherapypat.R;
 import com.kermitlin.lighttherapypat.model.User;
 import com.kermitlin.lighttherapypat.ui.BaseActivity;
-import com.kermitlin.lighttherapypat.ui.MainActivity;
+import com.kermitlin.lighttherapypat.ui.therapyLists.MainActivity;
 import com.kermitlin.lighttherapypat.utils.Constants;
 import com.kermitlin.lighttherapypat.utils.Utils;
 
@@ -219,12 +219,8 @@ public class LoginActivity extends BaseActivity {
             Log.i(LOG_TAG, provider + " " + getString(R.string.log_message_auth_successful));
 
             if (authData != null) {
-
-//                if (authData.getProvider().equals(Constants.PASSWORD_PROVIDER)) {
-//                    setAuthenticatedUserPasswordProvider(authData);
-//                } else {
-//                    Log.e(LOG_TAG, getString(R.string.log_error_invalid_provider) + authData.getProvider());
-//                }
+//                setAuthenticatedUserPasswordProvider(authData);
+                mEncodedEmail = Utils.encodeEmail(authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase());
 
                 /* Save provider name and encodedEmail for later use and start MainActivity */
                 mSharedPrefEditor.putString(Constants.KEY_PROVIDER, authData.getProvider()).apply();

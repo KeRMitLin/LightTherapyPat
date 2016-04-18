@@ -11,8 +11,8 @@ public final class Constants {
      * Constants related to locations in Firebase, such as the name of the node
      * where active lists are stored (ie "activeLists")
      */
-    public static final String FIREBASE_LOCATION_ACTIVE_LISTS = "activeLists";
-    public static final String FIREBASE_LOCATION_SHOPPING_LIST_ITEMS = "shoppingListItems";
+    public static final String FIREBASE_LOCATION_DEPLOYED_LISTS = "deployedLists";
+    public static final String FIREBASE_LOCATION_THERAPY_LIST_CONTENT = "therapyListContent";
     public static final String FIREBASE_LOCATION_USERS = "users";
 
 
@@ -24,17 +24,16 @@ public final class Constants {
     public static final String FIREBASE_PROPERTY_LIST_NAME = "listName";
     public static final String FIREBASE_PROPERTY_TIMESTAMP_LAST_CHANGED = "timestampLastChanged";
     public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
-    public static final String FIREBASE_PROPERTY_ITEM_NAME = "itemName";
+    public static final String FIREBASE_PROPERTY_TOGGLE_SWITCH = "toggleSwitch";
     public static final String FIREBASE_PROPERTY_EMAIL = "email";
-    public static final String FIREBASE_PROPERTY_USERS_SHOPPING = "usersShopping";
     public static final String FIREBASE_PROPERTY_USER_HAS_VERIFIED_MAIL = "hasVerifiedMail";
 
     /**
      * Constants for Firebase URL
      */
     public static final String FIREBASE_URL = BuildConfig.UNIQUE_FIREBASE_ROOT_URL;
-    public static final String FIREBASE_URL_ACTIVE_LISTS = FIREBASE_URL + "/" + FIREBASE_LOCATION_ACTIVE_LISTS;
-    public static final String FIREBASE_URL_SHOPPING_LIST_ITEMS = FIREBASE_URL + "/" + FIREBASE_LOCATION_SHOPPING_LIST_ITEMS;
+    public static final String FIREBASE_URL_DEPLOYED_LISTS = FIREBASE_URL + "/" + FIREBASE_LOCATION_DEPLOYED_LISTS;
+    public static final String FIREBASE_URL_THERAPY_LIST_CONTENT = FIREBASE_URL + "/" + FIREBASE_LOCATION_THERAPY_LIST_CONTENT;
     public static final String FIREBASE_URL_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
 
 
@@ -49,7 +48,6 @@ public final class Constants {
     public static final String KEY_PROVIDER = "PROVIDER";
     public static final String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
     public static final String KEY_LIST_OWNER = "LIST_OWNER";
-    public static final String KEY_GOOGLE_EMAIL = "GOOGLE_EMAIL";
     public static final String KEY_SIGNUP_EMAIL = "SIGNUP_EMAIL";
 
 
@@ -59,6 +57,4 @@ public final class Constants {
     public static final String PASSWORD_PROVIDER = "password";
     public static final String GOOGLE_PROVIDER = "google";
     public static final String PROVIDER_DATA_DISPLAY_NAME = "displayName";
-
-
 }
