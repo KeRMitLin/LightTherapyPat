@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat;
  * Utility class
  */
 public class Utils {
+
+
+
     /**
      * Format the timestamp with SimpleDateFormat
      */

@@ -16,13 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.kermitlin.lighttherapypat.R;
-import com.kermitlin.lighttherapypat.model.User;
 import com.kermitlin.lighttherapypat.ui.BaseActivity;
 import com.kermitlin.lighttherapypat.ui.therapyLists.MainActivity;
 import com.kermitlin.lighttherapypat.utils.Constants;
@@ -219,7 +216,6 @@ public class LoginActivity extends BaseActivity {
             Log.i(LOG_TAG, provider + " " + getString(R.string.log_message_auth_successful));
 
             if (authData != null) {
-//                setAuthenticatedUserPasswordProvider(authData);
                 mEncodedEmail = Utils.encodeEmail(authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase());
 
                 /* Save provider name and encodedEmail for later use and start MainActivity */
@@ -259,77 +255,6 @@ public class LoginActivity extends BaseActivity {
             }
         }
     }
-
-    /**
-     * Helper method that makes sure a user is created if the user
-     * logs in with Firebase's email/password provider.
-     *
-     * @param authData AuthData object returned from onAuthenticated
-     */
-    private void setAuthenticatedUserPasswordProvider(AuthData authData) {
-        final String unprocessedEmail = authData.getProviderData().get(Constants.FIREBASE_PROPERTY_EMAIL).toString().toLowerCase();
-        /**
-         * Encode user email replacing "." with ","
-         * to be able to use it as a Firebase db key
-         */
-        mEncodedEmail = Utils.encodeEmail(unprocessedEmail);
-
-        final Firebase userRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
-
-        /**
-         * Check if current user has logged in at least once
-         */
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                if (user != null) {
-
-                    /**
-                     * If recently registered user has hasLoggedInWithPassword = "false"
-                     * (never logged in using password provider)
-                     */
-                    if (!user.isHasVerifiedMail()) {
-
-                        /**
-                         * Change password if user that just signed in signed up recently
-                         * to make sure that user will be able to use temporary password
-                         * from the email more than 24 hours
-                         */
-                        mFirebaseRef.changePassword(unprocessedEmail, mEditTextPasswordInput.getText().toString(), mEditTextPasswordInput.getText().toString(), new Firebase.ResultHandler() {
-                            @Override
-                            public void onSuccess() {
-                                userRef.child(Constants.FIREBASE_PROPERTY_USER_HAS_VERIFIED_MAIL).setValue(true);
-                                        /* The password was changed */
-                                Log.d(LOG_TAG, getString(R.string.log_message_password_changed_successfully) + mEditTextPasswordInput.getText().toString());
-                            }
-
-                            @Override
-                            public void onError(FirebaseError firebaseError) {
-                                Log.d(LOG_TAG, getString(R.string.log_error_failed_to_change_password) + firebaseError);
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.e(LOG_TAG,
-                        getString(R.string.log_error_the_read_failed) +
-                                firebaseError.getMessage());
-            }
-        });
-    }
-
-    /**
-     * Helper method that makes sure a user is created if the user
-     * logs in with Firebase's Google login provider.
-     *
-     * @param authData AuthData object returned from onAuthenticated
-     */
-
 
     /**
      * Show error toast to users

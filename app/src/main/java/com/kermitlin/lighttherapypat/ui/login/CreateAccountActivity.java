@@ -3,6 +3,7 @@ package com.kermitlin.lighttherapypat.ui.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -155,11 +156,13 @@ public class CreateAccountActivity extends BaseActivity {
                 /* If there is no user, make one */
                 if (dataSnapshot.getValue() == null) {
                  /* Set raw version of date to the ServerValue.TIMESTAMP value and save into dateCreatedMap */
-                    HashMap<String, Object> timestampJoined = new HashMap<>();
-                    timestampJoined.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
+                    HashMap<String, Object> timestampEdit = new HashMap<>();
+                    timestampEdit.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
 
-                    User newUser = new User(mUserName, encodedEmail, timestampJoined);
+                    User newUser = new User(mUserName, encodedEmail, timestampEdit);
                     userLocation.setValue(newUser);
+
+                    NavUtils.navigateUpFromSameTask(CreateAccountActivity.this);
                 }
             }
 

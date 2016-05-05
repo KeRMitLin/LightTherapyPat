@@ -24,7 +24,7 @@ public final class Constants {
     public static final String FIREBASE_PROPERTY_LIST_NAME = "listName";
     public static final String FIREBASE_PROPERTY_TIMESTAMP_LAST_CHANGED = "timestampLastChanged";
     public static final String FIREBASE_PROPERTY_TIMESTAMP = "timestamp";
-    public static final String FIREBASE_PROPERTY_TOGGLE_SWITCH = "toggleSwitch";
+    public static final String FIREBASE_PROPERTY_SWITCH_ON = "switchOn";
     public static final String FIREBASE_PROPERTY_EMAIL = "email";
     public static final String FIREBASE_PROPERTY_USER_HAS_VERIFIED_MAIL = "hasVerifiedMail";
 
@@ -49,7 +49,11 @@ public final class Constants {
     public static final String KEY_ENCODED_EMAIL = "ENCODED_EMAIL";
     public static final String KEY_LIST_OWNER = "LIST_OWNER";
     public static final String KEY_SIGNUP_EMAIL = "SIGNUP_EMAIL";
-
+    public static final String KEY_LIST_COUNT = "LIST_COUNT";
+    public static final String KEY_ARRAY_COLOR = "ARRAY_COLOR";
+    public static final String KEY_ARRAY_HZ = "ARRAY_HZ";
+    public static final String KEY_ARRAY_TIME = "ARRAY_TIME";
+    public static final String KEY_PROCESS_COUNTER = "PROCESS_COUNTER";
 
     /**
      * Constants for Firebase login

@@ -1,5 +1,6 @@
 package com.kermitlin.lighttherapypat.ui.therapyLists;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,15 +14,14 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
-import com.firebase.client.ServerValue;
 import com.firebase.client.ValueEventListener;
 import com.kermitlin.lighttherapypat.R;
 import com.kermitlin.lighttherapypat.model.TherapyList;
 import com.kermitlin.lighttherapypat.model.User;
 import com.kermitlin.lighttherapypat.ui.BaseActivity;
+import com.kermitlin.lighttherapypat.ui.TherapyGo;
+import com.kermitlin.lighttherapypat.ui.processListContent.ProcessListActivity;
 import com.kermitlin.lighttherapypat.utils.Constants;
-
-import java.util.HashMap;
 
 public class MainActivity extends BaseActivity {
 
@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
 
         mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mEncodedEmail);
         mTherapyListsRef = new Firebase(Constants.FIREBASE_URL_DEPLOYED_LISTS).child(mEncodedEmail);
-        queryRef = mTherapyListsRef.orderByChild(Constants.FIREBASE_PROPERTY_TOGGLE_SWITCH).equalTo(true);
+        queryRef = mTherapyListsRef.orderByChild(Constants.FIREBASE_PROPERTY_SWITCH_ON).equalTo(true);
 
         initializeScreen();
 
@@ -81,38 +81,14 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TherapyList selectedList = mTherapyListAdapter.getItem(position);
                 if (selectedList != null) {
-//                    Intent intent = new Intent(getActivity(), TherapyGo.class);
-//                    /* Get the list ID using the adapter's get ref method to get the Firebase
-//                     * ref and then grab the key.
-//                     */
-//                    String listId = mActiveListAdapter.getRef(position).getKey();
-//                    intent.putExtra(Constants.KEY_LIST_ID, listId);
-//                    /* Starts an active showing the details for the selected list */
-//                    startActivity(intent);
+                    Intent intent = new Intent(MainActivity.this, ProcessListActivity.class);
+                    String listId = mTherapyListAdapter.getRef(position).getKey();
+                    intent.putExtra(Constants.KEY_LIST_ID, listId);
+                    /* Starts an active showing the details for the selected list */
+                    startActivity(intent);
                 }
             }
         });
-
-
-        //insertTest
-        Firebase mInsertRef = new Firebase(Constants.FIREBASE_URL_DEPLOYED_LISTS).child(mEncodedEmail);
-        Firebase newListRef = mInsertRef.push();
-
-        /* Save listsRef.push() to maintain same random Id */
-        final String listId = newListRef.getKey();
-
-        /**
-         * Set raw version of date to the ServerValue.TIMESTAMP value and save into
-         * timestampCreatedMap
-         */
-        HashMap<String, Object> timestampCreated = new HashMap<>();
-        timestampCreated.put(Constants.FIREBASE_PROPERTY_TIMESTAMP, ServerValue.TIMESTAMP);
-
-            /* Build the shopping list */
-        TherapyList newTherapyList = new TherapyList("testList", true, timestampCreated);
-
-            /* Add the shopping list */
-        newListRef.setValue(newTherapyList);
     }
 
     @Override
