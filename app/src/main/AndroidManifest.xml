@@ -33,6 +33,10 @@
         <activity android:name=".ui.processListContent.ProcessListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity android:name=".ui.TherapyGo"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

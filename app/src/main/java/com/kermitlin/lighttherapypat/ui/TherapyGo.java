@@ -161,7 +161,7 @@ public class TherapyGo extends BaseActivity {
 
                     Intent intent = new Intent();
                     intent.setClass(TherapyGo.this, TherapyGo.class);
-                    intent.putExtra(Constants.KEY_LIST_COUNT, mPhaseCount);
+                    intent.putExtra(Constants.KEY_LIST_COUNT, String.valueOf(mPhaseCount));
                     intent.putExtra(Constants.KEY_ARRAY_COLOR, mProcessColor);
                     intent.putExtra(Constants.KEY_ARRAY_HZ, mProcessHz);
                     intent.putExtra(Constants.KEY_ARRAY_TIME, mProcessTime);
