@@ -156,7 +156,7 @@ public class TherapyGo extends BaseActivity {
 
             if (processTimeCounter == mProcessTime[processCounter] + 1) {
                 //check phaseCount
-                if (processCounter < mPhaseCount) {
+                if (processCounter < mPhaseCount - 1) {
                     processCounter = processCounter + 1;
 
                     Intent intent = new Intent();
@@ -170,7 +170,7 @@ public class TherapyGo extends BaseActivity {
                     mHandler.removeCallbacks(this);
                     finish();
 
-                } else if (processCounter == mPhaseCount) {
+                } else if (processCounter == mPhaseCount - 1) {
                     Intent intent = new Intent();
                     intent.setClass(TherapyGo.this, MainActivity.class);
                     startActivity(intent);
