@@ -8,7 +8,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.kermitlin.lighttherapypat.R;
@@ -21,7 +23,7 @@ public class TherapyGo extends BaseActivity {
     private int mPhaseCount;
     private String[] mProcessColor;
     private int[] mProcessHz, mProcessTime;
-    private int processTimeCounter = 0, processCounter;
+    private int processTimeCounter = 0, processCounter = 0;
     private AnimationDrawable frameAnimation = null;
 
     private Handler mHandler = new Handler();
@@ -30,6 +32,8 @@ public class TherapyGo extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_therapy_go);
 
         /* Get the push ID from the extra passed by ShoppingListFragment */
@@ -39,7 +43,7 @@ public class TherapyGo extends BaseActivity {
         mProcessHz = intent.getIntArrayExtra(Constants.KEY_ARRAY_HZ);
         mProcessTime = intent.getIntArrayExtra(Constants.KEY_ARRAY_TIME);
 
-        processCounter = intent.getIntExtra(Constants.KEY_PROCESS_COUNTER, 0);
+        processCounter = Integer.parseInt(intent.getStringExtra(Constants.KEY_PROCESS_COUNTER));
 
         initializeScreen();
 
@@ -155,6 +159,9 @@ public class TherapyGo extends BaseActivity {
             processTimeCounter = processTimeCounter + 1;
 
             if (processTimeCounter == mProcessTime[processCounter] + 1) {
+
+                Log.v("XDDDDDDDDDD",String.valueOf(processCounter));
+                Log.v("XDDDDDDDDDD",String.valueOf(mPhaseCount));
                 //check phaseCount
                 if (processCounter < mPhaseCount - 1) {
                     processCounter = processCounter + 1;
@@ -165,7 +172,7 @@ public class TherapyGo extends BaseActivity {
                     intent.putExtra(Constants.KEY_ARRAY_COLOR, mProcessColor);
                     intent.putExtra(Constants.KEY_ARRAY_HZ, mProcessHz);
                     intent.putExtra(Constants.KEY_ARRAY_TIME, mProcessTime);
-                    intent.putExtra(Constants.KEY_PROCESS_COUNTER, processCounter);
+                    intent.putExtra(Constants.KEY_PROCESS_COUNTER, String.valueOf(processCounter));
                     startActivity(intent);
                     mHandler.removeCallbacks(this);
                     finish();
