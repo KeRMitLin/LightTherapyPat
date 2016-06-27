@@ -19,7 +19,6 @@ import com.kermitlin.lighttherapypat.R;
 import com.kermitlin.lighttherapypat.model.TherapyList;
 import com.kermitlin.lighttherapypat.model.User;
 import com.kermitlin.lighttherapypat.ui.BaseActivity;
-import com.kermitlin.lighttherapypat.ui.TherapyGo;
 import com.kermitlin.lighttherapypat.ui.processListContent.ProcessListActivity;
 import com.kermitlin.lighttherapypat.utils.Constants;
 
