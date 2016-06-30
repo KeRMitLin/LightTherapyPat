@@ -152,6 +152,8 @@ public class TherapyGo extends BaseActivity {
             Bitmap bmp, bmp2;
             Drawable frame, frame2;
 
+            Log.v("RANDOM",String.valueOf(randomNum%10));
+
             switch (randomNum%10){
                 case 0:
                     bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_red);
