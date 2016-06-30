@@ -63,6 +63,7 @@ public class TherapyGo extends BaseActivity {
 
     protected void startAnimation() {
         frameAnimation = new AnimationDrawable();
+        int randomNum = (int)(Math.random()* 97 + 1);
         //mImageView.setBackgroundResource(R.drawable.frame_animation);
         //frameAnimation = (AnimationDrawable)mImageView.getBackground();
 
@@ -146,6 +147,111 @@ public class TherapyGo extends BaseActivity {
             frameAnimation.addFrame(frame2, (int) (1000.0 / (mProcessHz[processCounter] * 2.0)));
 
             mImageView.setBackgroundDrawable(frameAnimation);
+        } else if ("random".equals(mProcessColor[processCounter])) {
+
+            Bitmap bmp, bmp2;
+            Drawable frame, frame2;
+
+            switch (randomNum%10){
+                case 0:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_red);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 1:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_orange);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 2:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_yellow);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 3:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_green);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 4:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_blue);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 5:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_purple);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 6:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                case 7:
+                    bmp = BitmapFactory.decodeResource(getResources(), R.drawable.color_white);
+                    frame = new BitmapDrawable(getResources(), bmp);
+                    frameAnimation.addFrame(frame, (int) (1000.0 / (randomNum * 2.0)));
+
+                    bmp2 = BitmapFactory.decodeResource(getResources(), R.drawable.color_black);
+                    frame2 = new BitmapDrawable(getResources(), bmp2);
+                    frameAnimation.addFrame(frame2, (int) (1000.0 / (randomNum * 2.0)));
+
+                    mImageView.setBackgroundDrawable(frameAnimation);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         frameAnimation.setOneShot(false);
