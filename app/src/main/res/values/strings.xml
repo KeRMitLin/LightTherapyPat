@@ -1,74 +1,43 @@
 <resources>
     <string name="app_name">行動光療機</string>
-    <string name="action_settings">Settings</string>
-    <string name="edit_time">Edit Time : </string>
+    <string name="edit_time">上次編輯時間 : </string>
 
     <!-- Base Error Strings-->
-    <string name="log_error_updating_data">Error updating data: </string>
-    <string name="log_error_the_read_failed">The read failed: </string>
-    <string name="log_error_occurred">"Error occurred: "</string>
-
-    <string name="created_by">Created by </string>
+    <string name="log_error_the_read_failed">讀取資料失敗: </string>
+    <string name="log_error_occurred">"發生錯誤: "</string>
 
     <!-- Menu Strings -->
-    <string name="action_logout">Logout</string>
-
-    <!--
-
-     == Login and Create Account Strings ==
-
-      -->
-    <!-- Activity Titles  -->
-    <string name="title_activity_create_account">Create Account</string>
+    <string name="action_settings">設定</string>
+    <string name="action_logout">登出</string>
 
     <!-- Login and Create Account Screen  -->
-    <string name="text_dont_have_account">Don\'t have an account?</string>
-    <string name="text_already_have_account">Already have an account?</string>
-    <string name="button_create_account">Sign Up</string>
-    <string name="button_sign_in">Sign In</string>
-    <string name="button_signin_with_google">SIGN IN WITH GOOGLE</string>
-    <string name="button_signin_with_password">SIGN IN</string>
-    <string name="hint_enter_email">Enter your email</string>
-    <string name="hint_enter_username">Enter your name</string>
-    <string name="hint_enter_password">Enter password</string>
-    <string name="image_view_logo_image">Logo Image</string>
+    <string name="title_activity_create_account">新增帳號</string>
+    <string name="text_dont_have_account">還沒申請帳號?</string>
+    <string name="text_already_have_account">已經申請過帳號?</string>
+    <string name="button_create_account">點這裡註冊</string>
+    <string name="button_sign_in">點這裡登入</string>
+    <string name="button_signin_with_password">登入</string>
+    <string name="hint_enter_email">請輸入您的信箱</string>
+    <string name="hint_enter_username">請輸入您的代表名稱</string>
+    <string name="hint_enter_password">請輸入您的密碼</string>
+    <string name="image_view_logo_image">Logo</string>
 
 
     <!-- Instructions and Loading Text -->
-    <string name="progress_dialog_loading">Loading…</string>
-    <string name="progress_dialog_authenticating_with_firebase">Authenticating with Firebase…</string>
-    <string name="progress_dialog_loading_data_with_firebase">Loading Data…</string>
-    <string name="progress_dialog_creating_user_with_firebase">Attempting to create account…</string>
-    <string name="progress_dialog_check_inbox">Please check your inbox for your password</string>
+    <string name="progress_dialog_loading">讀取中…</string>
+    <string name="progress_dialog_authenticating_with_firebase">正在跟主機進行認證…</string>
+    <string name="progress_dialog_loading_data_with_firebase">資料讀取中…</string>
+    <string name="progress_dialog_creating_user_with_firebase">正在建立帳號…</string>
 
     <!-- Errors -->
-    <string name="dialog_title_error">Error</string>
-    <string name="error_message_failed_sign_in_no_network">There was a problem with the network connection.\nAre you sure you\'re connected to the internet?</string>
-    <string name="log_error_invalid_provider">"Invalid provider: "</string>
-    <string name="log_error_failed_to_change_password">"Failed to change the password: "</string>
-    <string name="error_invalid_email_not_valid">%s is not a valid email</string>
-    <string name="error_message_email_issue">There was an error with your email; please check that you entered it correctly.</string>
-    <string name="error_you_didnt_give_permissions">You must give ShoppingList++ permission to access your Google account information if you want to use Google sign-in.</string>
-    <string name="error_email_taken">The email is already taken.</string>
-    <string name="error_invalid_password_not_valid">Please enter a password that is at least 6 characters long.</string>
-    <string name="error_cannot_be_empty">This cannot be empty.</string>
-
-    <!-- Google Errors -->
-    <string name="google_error_recoverable_oauth_error">"Recoverable Google OAuth error: "</string>
-    <string name="google_error_google_play_services_not_available">Google Play Services are not available.</string>
-    <string name="google_error_trying_to_connect_google_api">Trying to connect to Google API</string>
-    <string name="google_error_auth_with_google">"Error authenticating with Google: "</string>
-    <string name="google_error_network_error">"Network error: "</string>
-    <string name="google_error_cant_connect_to_api">Are you sure that you set up a project for your app?
-        Check out : https://console.developers.google.com/project. Also make sure you have all the proper
-    gradle dependencies</string>
-
-
-    <!-- OAuth Format -->
-    <string name="oauth2_format">oauth2:%s</string>
+    <string name="dialog_title_error">發生錯誤</string>
+    <string name="error_message_failed_sign_in_no_network">網路發生錯誤.\n請確認網路是否正確連結?</string>
+    <string name="error_invalid_email_not_valid">%s 是不符合email規定格式</string>
+    <string name="error_message_email_issue">信箱錯誤，請確認是否輸入正確.</string>
+    <string name="error_email_taken">此信箱已被註冊.</string>
+    <string name="error_invalid_password_not_valid">密碼需至少有6個字元.</string>
+    <string name="error_cannot_be_empty">此處不可為空.</string>
 
     <!-- Log Messages -->
-    <string name="log_message_password_changed_successfully">Password changed successfully from temporary password to </string>
-    <string name="log_message_auth_successful">auth successful.</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="log_message_auth_successful">登入成功.</string>
 </resources>
