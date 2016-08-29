@@ -37,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     protected Firebase.AuthStateListener mAuthListener;
     protected Firebase mFirebaseRef;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
